@@ -21,7 +21,7 @@ if uploaded_file is not None:
 
     # Send the image to the FastAPI backend
     files = {'file': ('image.jpg', byte_im, 'image/jpeg')}
-    response = requests.post("http://localhost:8000/predict", files=files, data={'model_type': "all"})
+    response = requests.post("https://scoliosis-3.onrender.com/predict", files=files, data={'model_type': "all"})
 
     if response.status_code == 200:
         results = response.json()
