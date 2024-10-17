@@ -34,22 +34,22 @@ def modify_model(model, num_classes=2):
         model.fc = nn.Linear(model.fc.in_features, num_classes)
     elif isinstance(model, models.DenseNet):
         model.classifier = nn.Linear(model.classifier.in_features, num_classes)
-##    elif isinstance(model, models.VisionTransformer):
-##        model.heads.head = nn.Linear(model.heads.head.in_features, num_classes)
+    elif isinstance(model, models.VisionTransformer):
+        model.heads.head = nn.Linear(model.heads.head.in_features, num_classes)
     return model
 
 resnet = modify_model(models.resnet18(weights='IMAGENET1K_V1')).to(device)
 densenet = modify_model(models.densenet121(weights='IMAGENET1K_V1')).to(device)
-##vit = modify_model(models.vit_b_16(weights='IMAGENET1K_V1')).to(device)
+vit = modify_model(models.vit_b_16(weights='IMAGENET1K_V1')).to(device)
 
 resnet.load_state_dict(torch.load('resnet18.pth', map_location=device))
 densenet.load_state_dict(torch.load('densenet121.pth', map_location=device))
-##vit.load_state_dict(torch.load('vit_b_16.pth', map_location=device))
+vit.load_state_dict(torch.load('vit_b_16.pth', map_location=device))
 
 model_dict = {
     'resnet': resnet,
     'densenet': densenet,
-##    'vit': vit
+    'vit': vit
 }
 
 @app.post("/predict")
